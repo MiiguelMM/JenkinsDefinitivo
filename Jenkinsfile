@@ -5,6 +5,12 @@ pipeline {
         maven 'Maven 3.9.9'
         jdk 'Java 21'
     }
+    stage('Verificar versión de Java') {
+    steps {
+        sh 'java -version'  // Muestra la versión de Java
+    }
+}
+
 
     stages {
         stage('Build') {
