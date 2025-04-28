@@ -14,6 +14,9 @@ public class PrintTexto {
     // Estilos de texto adicionales
     public static final String BOLD = "\033[1m";         // Texto en negrita
     public static final String UNDERLINE = "\033[4m";    // Texto subrayado
-
+    public static final String PURPLE1 = "\033[35m"; 
+    public static final String CYAN2 = "\033[36m"; 
+    public static final String WHITE2 = "\033[37m";
+    public static final String RESET2 = "\033[0m";
 }
 
