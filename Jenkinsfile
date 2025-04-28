@@ -1,5 +1,9 @@
 pipeline {
     agent any
+
+    environment {
+        SONAR_TOKEN = credentials('SONAR_AUTH_TOKEN')
+    }
     
     tools {
         maven 'Maven 3.9.9'
@@ -35,13 +39,14 @@ pipeline {
             }
         }
 
-        stage('Análisis de Código') {
+        stages {
+        stage('SonarQube Analysis') {
             steps {
-                echo 'Analizando código con SonarQube...'
                 withSonarQubeEnv('SonarQube') {
-                    sh './mvnw sonar:sonar || mvn sonar:sonar'
+                    sh "./mvnw clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN"
                 }
             }
+        }
         }
 
         stage('Publicar en Nexus') {
