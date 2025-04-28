@@ -13,15 +13,15 @@ pipeline {
     stages {
         stage('Verificar versión de Java') {
             steps {
-                sh 'java -version'  // Muestra la versión de Java
+                sh 'java -version'
             }
         }
         
         stage('Build') {
             steps {
                 echo 'Compilando proyecto...'
-                sh 'chmod +x ./mvnw || true'  // Intenta dar permisos, ignora errores
-                sh './mvnw clean install || mvn clean install'  // Intenta con wrapper, si falla usa maven normal
+                sh 'chmod +x ./mvnw || true'
+                sh './mvnw clean install || mvn clean install'
             }
         }
 
@@ -39,14 +39,13 @@ pipeline {
             }
         }
 
-        stages {
+        // ✅ CORREGIDO: Eliminamos "stages {}" adicional
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     sh "./mvnw clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN"
                 }
             }
-        }
         }
 
         stage('Publicar en Nexus') {
@@ -85,7 +84,6 @@ pipeline {
             }
             steps {
                 echo 'Desplegando en ambiente de desarrollo...'
-                // Comandos para desplegar en servidor de desarrollo
             }
         }
 
@@ -95,7 +93,6 @@ pipeline {
             }
             steps {
                 echo 'Desplegando en producción...'
-                // Comandos para desplegar en servidor de producción
             }
         }
     }
@@ -103,11 +100,9 @@ pipeline {
     post {
         success {
             echo 'Pipeline ejecutado con éxito!'
-            // Enviar notificación de éxito
         }
         failure {
             echo 'El pipeline ha fallado!'
-            // Enviar notificación de fallo
         }
     }
 }
