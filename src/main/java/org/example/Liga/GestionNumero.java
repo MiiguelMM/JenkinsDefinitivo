@@ -22,6 +22,7 @@ public class GestionNumero
             catch (NumberFormatException nfe) 
             {
                 System.out.println("Elección incorrecta. Por favor escriba un numero");
+                System.out.println("Elección incorrecta. Por favor escriba un numero");
                 correcto = false;
             }
         }
