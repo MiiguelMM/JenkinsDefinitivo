@@ -39,7 +39,6 @@ pipeline {
             }
         }
 
-        // ✅ CORREGIDO: Eliminamos "stages {}" adicional
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
@@ -56,12 +55,12 @@ pipeline {
                                                  passwordVariable: 'NEXUS_PASSWORD')]) {
                     sh '''
                         ./mvnw deploy -DskipTests \
-                        -DaltDeploymentRepository=nexus::default::http://localhost:8081/repository/maven-releases/ \
+                        -DaltDeploymentRepository=nexus::default::http://nexus3:8081/repository/maven-releases/ \
                         -DrepositoryId=nexus \
                         -Dusername=${NEXUS_USER} \
                         -Dpassword=${NEXUS_PASSWORD} || \
                         mvn deploy -DskipTests \
-                        -DaltDeploymentRepository=nexus::default::http://localhost:8081/repository/maven-releases/ \
+                        -DaltDeploymentRepository=nexus::default::http://nexus3:8081/repository/maven-releases/ \
                         -DrepositoryId=nexus \
                         -Dusername=${NEXUS_USER} \
                         -Dpassword=${NEXUS_PASSWORD}
